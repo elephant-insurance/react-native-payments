@@ -404,7 +404,7 @@ export default class PaymentRequest {
     this._acceptPromiseRejecter(new Error('AbortError'));
 
     // Remove event listeners before aborting.
-    this._removeEventListeners();
+    // this._removeEventListeners(); // commented until parent package has a fix for IOS crash while cancelling the payment
   }
 
   _removeEventListeners() {
