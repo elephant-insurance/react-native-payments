@@ -404,21 +404,17 @@ export default class PaymentRequest {
     this._acceptPromiseRejecter(new Error('AbortError'));
 
     // Remove event listeners before aborting.
-    // this._removeEventListeners(); // commented until parent package has a fix for IOS crash while cancelling the payment
+    this._removeEventListeners();
   }
 
   _removeEventListeners() {
     // Internal Events
-    DeviceEventEmitter.removeSubscription(this._userDismissSubscription);
-    DeviceEventEmitter.removeSubscription(this._userAcceptSubscription);
+    this._userDismissSubscription.remove();
+    this._userAcceptSubscription.remove();
 
     if (IS_IOS) {
-      DeviceEventEmitter.removeSubscription(
-        this._shippingAddressChangeSubscription
-      );
-      DeviceEventEmitter.removeSubscription(
-        this._shippingOptionChangeSubscription
-      );
+      this._shippingAddressChangeSubscription.remove();
+      this._shippingOptionChangeSubscription.remove();
     }
   }
 
